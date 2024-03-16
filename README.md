@@ -3,7 +3,9 @@
 Simple Ecommerce
 
 - Demo: https://ecommerce.anasabdur.com
-- Admin: https://ecommerce.anasabdur.com/admin [admin@admin.com, admin]
+- Admin: https://ecommerce.anasabdur.com/admin
+- - User: admin@admin.com
+- - pass: admin
 - Payment Test: https://docs.midtrans.com/docs/testing-payment-on-sandbox
 
 ## Requirements
@@ -37,6 +39,11 @@ php artisan migrate:fresh --seed
 php artisan storage:link
 ```
 8. Run `npm i && npm run build`
+
+### Panel admin
+- URL `/admin`
+- User: admin@admin.com
+- pass: admin
 
 ### Example SQL
 - Location: [database/example.sql](https://github.com/anasark/ecommerce/blob/master/database/example.sql)
