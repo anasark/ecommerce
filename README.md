@@ -2,6 +2,10 @@
 
 Simple Ecommerce
 
+- Demo: https://ecommerce.anasabdur.com
+- Admin: https://ecommerce.anasabdur.com/admin [admin@admin.com, admin]
+- Payment Test: https://docs.midtrans.com/docs/testing-payment-on-sandbox
+
 ## Requirements
 
 PHP >= 8.1 
