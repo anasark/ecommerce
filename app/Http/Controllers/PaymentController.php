@@ -10,9 +10,14 @@ use Midtrans\Snap;
 
 class PaymentController extends Controller
 {
+    /**
+     * @param Request $request
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function pay(Request $request)
     {
-        if (empty($request->code)) {
+        if (! $this->validateInvoice($request->code)) {
             throw new \Exception('Invalid request');
         }
 
@@ -41,6 +46,11 @@ class PaymentController extends Controller
         ]));
     }
 
+    /**
+     * @param Request $request
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function callback(Request $request)
     {
         $params = explode('-', $request->order_id);
@@ -55,7 +65,28 @@ class PaymentController extends Controller
         return redirect()->route('invoice.view', $code);
     }
 
-    private function getTransactionDetail($code): array
+    /**
+     * @param string|null $code
+     * 
+     * @return bool
+     */
+    private function validateInvoice(string $code = null): bool
+    {
+        if (empty($code)) {
+            return false;
+        }
+
+        $invoice = Invoice::getByCode($code);
+
+        return $invoice->order->user_id != Auth::id();
+    }
+
+    /**
+     * @param string $code
+     * 
+     * @return array
+     */
+    private function getTransactionDetail(string $code): array
     {
         $invoice = Invoice::getByCode($code);
 
@@ -65,6 +96,9 @@ class PaymentController extends Controller
         ];
     }
 
+    /**
+     * @return array
+     */
     private function getCustomerDetail(): array
     {
         $user  = Auth::user();

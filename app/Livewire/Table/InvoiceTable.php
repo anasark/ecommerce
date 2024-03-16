@@ -5,6 +5,9 @@ namespace App\Livewire\Table;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Invoice;
+use App\Models\Order;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
@@ -16,6 +19,16 @@ class InvoiceTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+    }
+
+    public function builder(): Builder
+    {
+        $invoiceIds = Order::query()
+            ->where('user_id', Auth::id())
+            ->get()
+            ->pluck('invoice_id');
+
+        return Invoice::query()->where('id', $invoiceIds);
     }
 
     public function columns(): array
@@ -32,6 +45,7 @@ class InvoiceTable extends DataTableComponent
             Column::make("Total", "total")
                 ->format(fn ($value) => Str::price($value)),
             Column::make("Status", "status")
+                ->format(fn ($value) => strtoupper($value))
                 ->sortable(),
             ButtonGroupColumn::make('Actions')
                 ->attributes(function($row) {

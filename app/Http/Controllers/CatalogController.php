@@ -6,6 +6,9 @@ use App\Models\Product;
 
 class CatalogController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function index()
     {
         return view('catalog', [
@@ -13,6 +16,11 @@ class CatalogController extends Controller
         ]);
     }
 
+    /**
+     * @param Product $product
+     * 
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function view(Product $product)
     {
         return view('catalog-view', compact('product'));

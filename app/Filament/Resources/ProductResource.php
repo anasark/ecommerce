@@ -7,6 +7,7 @@ use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -25,35 +26,40 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Product';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->columnSpan('full')
-                    ->required(),
-                TextInput::make('description')
-                    ->columnSpan('full')
-                    ->required(),
-                TextInput::make('stock')
-                    ->numeric()
-                    ->required(),
-                TextInput::make('price')
-                    ->mask(RawJs::make('$money($input)'))
-                    ->stripCharacters(',')
-                    ->numeric()
-                    ->prefix('Rp')
-                    ->maxValue(42949672.95)
-                    ->required(),
-                FileUpload::make('attachment')
-                    ->required(),
-                Toggle::make('is_visible')
-                    ->inline(false)
-                    ->default(true)
-                    ->onIcon('heroicon-o-eye')
-                    ->offIcon('heroicon-o-eye-slash')
-                    ->required(),
-            ]);
+                Section::make()
+                    ->schema([
+                        TextInput::make('name')
+                            ->required(),
+                        TextInput::make('description')
+                            ->required(),
+                        TextInput::make('stock')
+                            ->numeric()
+                            ->required(),
+                        TextInput::make('price')
+                            ->mask(RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->numeric()
+                            ->prefix('Rp')
+                            ->maxValue(42949672.95)
+                            ->required(),
+                    ])->columnSpan(2)->columns(1),
+                Section::make()
+                    ->schema([
+                        FileUpload::make('attachment')
+                            ->required(),
+                        Toggle::make('is_visible')
+                            ->default(true)
+                            ->onIcon('heroicon-o-eye')
+                            ->offIcon('heroicon-o-eye-slash')
+                            ->required(),
+                    ])->columnSpan(1),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table
@@ -62,14 +68,19 @@ class ProductResource extends Resource
             ->columns([
                 ImageColumn::make('attachment'),
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('description')
+                    ->description(fn (Product $product): string => $product->description)
                     ->searchable(),
                 TextColumn::make('price')
                     ->money('IDR')
                     ->sortable(),
                 TextColumn::make('stock'),
                 TextColumn::make('is_visible'),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //

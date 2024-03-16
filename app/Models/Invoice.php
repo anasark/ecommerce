@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Invoice extends Model
 {
@@ -29,6 +30,17 @@ class Invoice extends Model
         self::STATUS_CANCELED,
     ];
 
+    /**
+     * Get the order.
+     */
+    public function order(): HasOne
+    {
+        return $this->hasOne(Order::class);
+    }
+
+    /**
+     * @return string
+     */
     public static function generateCode(): string
     {
         $id = self::all()->last()?->id;
@@ -38,6 +50,11 @@ class Invoice extends Model
         return 'INV' . str_pad($id, 5, "0", STR_PAD_LEFT);
     }
 
+    /**
+     * @param string $code
+     * 
+     * @return Invoice
+     */
     public static function getByCode(string $code): Invoice
     {
         return self::where('code', $code)->firstOrFail();

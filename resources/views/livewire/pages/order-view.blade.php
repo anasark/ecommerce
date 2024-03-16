@@ -7,11 +7,11 @@
 
     <div class="flex flex-col justify-center">
         <div class="p-8 md:p-16 max-w-screen-lg bg-white p-3 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 text-gray-700 dark:text-gray-300">
+            <div class="grid grid-cols-2 text-gray-700 dark:text-gray-300">
                 <p class>
                     Invoice: <a href="{{ route('invoice.view', $order->invoice->code) }}" class="py-1 px-4 rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 hover:bg-gradient-to-r from-sky-600 to-indigo-600 ">{{ $order->invoice->status }}</a>
                 </p>
-                <p class="text-right">{{ date('l, m Y', strtotime($order->created_at)) }}</p>
+                <p class="text-right">{{ date('l, d F Y', strtotime($order->created_at)) }}</p>
             </div>
 
             <table class="mt-6 table-auto">

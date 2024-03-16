@@ -89,7 +89,12 @@ class Cart extends Component
         } catch (\Exception $e) {
             DB::rollback();
 
-            $this->dispatch('show-notification', message: $e->getMessage(), isSuccess: false);
+            $this->dispatch(
+                'show-notification',
+                message: $e->getMessage(),
+                isSuccess: false,
+                manualCloseReload: true
+            );
 
             Log::error($e->getMessage(), [
                 'trace' => $e->getTraceAsString()
@@ -142,5 +147,12 @@ class Cart extends Component
             'quantity'   => $cartItem->quantity,
             'price'      => $cartItem->product->price,
         ]);
+    }
+
+    #[On('notification-closed')]
+    public function closeNotification()
+    {
+        header('Location: ' . route('cart'));
+        exit;
     }
 }

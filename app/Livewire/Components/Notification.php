@@ -16,7 +16,7 @@ class Notification extends Component
     }
 
     #[On('show-notification')]
-    public function showNotification($message, $isSuccess = true)
+    public function showNotification($message, $isSuccess = true, $manualCloseReload = false)
     {
         if ($this->notification) {
             $this->closeNotification();
@@ -24,11 +24,18 @@ class Notification extends Component
     
         $this->notification = $message;
         $this->isSuccess    = $isSuccess;
+
+        if (! $manualCloseReload) {
+            $this->dispatch('auto-close-notification');
+        }
     }
 
     #[On('close-notification')]
     public function closeNotification()
     {
         $this->notification = false;
+
+
+        $this->dispatch('notification-closed');
     }
 }

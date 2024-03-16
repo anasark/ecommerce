@@ -24,10 +24,14 @@ class Product extends Model
         'is_visible' => 'boolean',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
     public static function getProducts()
     {
         return self::query()
             ->where('is_visible', 1)
+            ->where('stock', '>', 0)
             ->get();
     }
 }

@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Str::macro('price', function ($value) {
-            return 'Rp ' . number_format($value, 2);
+            return 'IDR ' . number_format($value, 2);
         });
     }
 }

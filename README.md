@@ -7,7 +7,7 @@ Simple Ecommerce
 PHP >= 8.1 
 https://laravel.com/docs/10.x/releases#support-policy
 
-## Installation:
+## Installation in local:
 
 ### Use Make File
 1. Clone the repository using `git clone git@github.com:anasark/ecommerce.git` command.
@@ -15,13 +15,15 @@ https://laravel.com/docs/10.x/releases#support-policy
 3. Add to host file `127.0.0.1 ecommerce.io` and `127.0.0.1 mysql`
 3. Start a Docker development environment using `make start` command.
 4. Install dependencies and database structure using `make install` command.
+5. don't forget to setup `.env`
+6. Run `npm i && npm run build`
 
 ### Manually
 1. Clone the repository using `git clone git@github.com:anasark/ecommerce.git` command.
 2. Go to project folder `cd ecommerce`
 3. Add to host file `127.0.0.1 ecommerce.io` and `127.0.0.1 mysql`
 4. Start a Docker development environment using `docker compose up -d` command.
-5. Copy env file using `cp .env.example .env` command.
+5. Copy env file using `cp .env.example .env` command. And setup it.
 6. Go into Container shell using `docker compose exec -ti php bash` command.
 7. Install dependencies and database structure using command:
 ```
@@ -30,3 +32,4 @@ php artisan key:generate
 php artisan migrate:fresh --seed
 php artisan storage:link
 ```
+8. Run `npm i && npm run build`

@@ -6,9 +6,9 @@
     </x-slot>
 
     <div class="flex flex-col justify-center">
-        <div class="p-8 md:p-16 max-w-screen-lg bg-white p-3 dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 text-gray-700 dark:text-gray-300">
-                <p>Status: <span class="font-bold">{{ $invoice->status }}</span></p>
+        <div class="py-8 px-2 md:p-16 max-w-screen-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg mx-auto">
+            <div class="grid grid-cols-2 text-gray-700 dark:text-gray-300">
+                <p>Status: <span class="font-bold uppercase text-lg">{{ $invoice->status }}</span></p>
                 <p class="text-right">{{ date('l, m Y', strtotime($invoice->created_at)) }}</p>
             </div>
 

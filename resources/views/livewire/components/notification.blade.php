@@ -38,7 +38,7 @@
 
 @script
 <script>
-    Livewire.on('show-notification', ({ postId }) => {
+    Livewire.on('auto-close-notification', ({ postId }) => {
         setTimeout(() => { $wire.dispatchSelf('close-notification') }, 3000)
     })
 </script>

@@ -29,16 +29,15 @@ class OrderTable extends DataTableComponent
         return [
             Column::make("Id", "id")
                 ->sortable(),
-            Column::make("Product")
+            Column::make("Title")
                 ->label(function ($row) {
-                    $text = $row->orderItems->first()->product->name;
-                    if ($row->orderItems->count() > 1) {
-                        $text .= ', and others.';
-                    }
-                    return $text;
+                    $title = $row->getOrderTitle();
+                    return strlen($title) <= 30
+                        ? $title
+                        : substr($title, 0, 30) . '...';
                 }),
             Column::make("Status", "invoice.status")
-                ->format(fn ($value) => ucwords($value))
+                ->format(fn ($value) => strtoupper($value))
                 ->sortable(),
             Column::make("Created at", "created_at")
                 ->sortable(),

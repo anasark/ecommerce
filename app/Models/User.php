@@ -7,6 +7,7 @@ namespace App\Models;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -24,6 +25,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -47,11 +49,27 @@ class User extends Authenticatable implements FilamentUser
         'is_admin'          => 'boolean',
     ];
 
+    /**
+     * Get the orders
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @return bool
+     */
     public function isAdmin(): bool
     {
         return str_ends_with($this->email, '@admin.com') || $this->is_admin;
     }
 
+    /**
+     * @param Panel $panel
+     * 
+     * @return bool
+     */
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->isAdmin();
