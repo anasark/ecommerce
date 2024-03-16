@@ -75,7 +75,8 @@ class InvoiceResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('Detail')
+                    ->url(fn (Invoice $invoice) => route('filament.admin.resources.orders.edit', $invoice->order->id)),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([

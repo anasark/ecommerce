@@ -34,4 +34,11 @@ class Product extends Model
             ->where('stock', '>', 0)
             ->get();
     }
+
+    public static function getProductIds()
+    {
+        return self::query()
+            ->get()
+            ->pluck('name', 'id');
+    }
 }

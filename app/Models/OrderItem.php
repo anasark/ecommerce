@@ -24,4 +24,10 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public static function countByProductId(int $productId): int
+    {
+        return self::query()
+            ->where('product_id', $productId)->count();
+    }
 }
