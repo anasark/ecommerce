@@ -37,3 +37,6 @@ php artisan migrate:fresh --seed
 php artisan storage:link
 ```
 8. Run `npm i && npm run build`
+
+### Example SQL
+- Location: `database/example.sql`
