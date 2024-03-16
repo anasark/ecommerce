@@ -39,4 +39,4 @@ php artisan storage:link
 8. Run `npm i && npm run build`
 
 ### Example SQL
-- Location: `database/example.sql`
+- Location: [database/example.sql](https://github.com/anasark/ecommerce/blob/master/database/example.sql)
