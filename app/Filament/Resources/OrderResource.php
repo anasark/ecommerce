@@ -54,7 +54,11 @@ class OrderResource extends Resource
                     ->label('Title')
                     ->limit(30)
                     ->searchable(),
+                TextColumn::make('invoice.code')
+                    ->label('Invoice')
+                    ->searchable(),
                 TextColumn::make('invoice.status')
+                    ->label('Status')
                     ->formatStateUsing(fn ($state) => strtoupper($state))
                     ->sortable(),
                 TextColumn::make('created_at')

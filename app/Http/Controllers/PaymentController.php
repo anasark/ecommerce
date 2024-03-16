@@ -78,7 +78,7 @@ class PaymentController extends Controller
 
         $invoice = Invoice::getByCode($code);
 
-        return $invoice->order->user_id != Auth::id();
+        return $invoice->order->user_id == Auth::id();
     }
 
     /**
